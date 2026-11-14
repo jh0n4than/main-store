@@ -10,7 +10,9 @@ require('../settings/database.php');
     $e_mail = $_POST['email'];
     //MD5 metodo de encriptacion 
     $password = MD5($_POST['pswd']);
-    
+    $PHOTO_URL = 'photos/photo_default.png';
+
+
 $sql_check_email = "SELECT * FROM users WHERE email = '$e_mail' "; 
 $res = pg_query($local_conn, $sql_check_email);
 $total = pg_num_rows($res);
@@ -25,13 +27,15 @@ if($total < 1){
     //prepare query
     $sql = "
         INSERT INTO 
-        users(firstname, lastname, ident_number, email, password) 
+        users(firstname, lastname, ident_number, mobile_phone, email, password,  url_photo ) 
         values(
             '$first_name' ,
             '$last_name', 
             '$ident_number',
+            '$mobile_phone',
             '$e_mail',
-            '$password'
+            '$password',
+            '$PHOTO_URL'      
         ) ;
     ";
 
@@ -58,13 +62,16 @@ if($total_sb < 1){
     //prepare query
     $sql = "
         INSERT INTO 
-        users(firstname, lastname, ident_number, email, password) 
+        users(firstname, lastname, ident_number, mobile_phone, email, password, url_photo) 
         values(
             '$first_name' ,
             '$last_name', 
             '$ident_number',
+            '$mobile_phone',
             '$e_mail',
-            '$password'
+            '$password',
+            '$PHOTO_URL'
+            
         ) ;
     ";
 
