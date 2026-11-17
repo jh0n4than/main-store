@@ -1,6 +1,6 @@
 <?php
 // get database conecction 
-require('../settings/database.php');
+include('../settings/database.php');
 
 //get payload from fronted
     $first_name = $_POST['fname'];

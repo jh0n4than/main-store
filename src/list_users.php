@@ -4,7 +4,7 @@ Use this URL to print data in browser:
 http://localhost:80/main-store/src/list_users.php
 */
 
-   include "../settings/database.php";
+   include('../settings/database.php');
 
    // Get data frm users table
    $sql = "
@@ -27,9 +27,11 @@ http://localhost:80/main-store/src/list_users.php
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
     <body>
-        <table border = "2" align = "center">
+        <table border = "2" align = "center" class="table table-striped">
 
             <tr>
                <th>photo</th> 
@@ -51,9 +53,15 @@ http://localhost:80/main-store/src/list_users.php
                <td><?= $row['status']?></td>
                
                <td  align="center">
-                 <a href="#"><img src="icons/pencil.png" alt="Edit user" width="20"></a>
-                 <a href="icons/search.png"><img src="icons/search.png" alt="Search user" width="20"></a>
-                 <a href="icons/Trash"><img src="icons/Trash.png" alt="Delete user" width="20"></a>
+                  <a href="#">
+                     <img src="icons/pencil.png" alt="Edit user" width="20">
+                  </a>
+                  <a href="icons/search.png">
+                     <img src="icons/search.png" alt="Search user" width="20">
+                  </a>
+                  <a href="delete_user.php?userID=<?= $row['id'] ?>">
+                     <img src="icons/Trash.png" alt="Delete user" width="20">
+                  </a>
                </td>
 
             </tr>
