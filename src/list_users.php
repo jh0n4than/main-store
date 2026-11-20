@@ -4,6 +4,13 @@ Use this URL to print data in browser:
 http://localhost:80/main-store/src/list_users.php
 */
 
+  session_start();
+   if (!isset($_SESSION['user_id'])) {
+      header('refresh:0;url=signin.html');
+      exit();
+   }
+
+
    include('../settings/database.php');
 
    // Get data frm users table
@@ -31,6 +38,11 @@ http://localhost:80/main-store/src/list_users.php
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
     <body>
+       <select>
+            <option>List all users</option>
+            <option>List active users only</option>
+            <option>List inactive users only</option>
+       </select>      
         <table border = "2" align = "center" class="table table-striped">
 
             <tr>
@@ -45,15 +57,19 @@ http://localhost:80/main-store/src/list_users.php
             <tr>
                 <!-- here print data from database-->
                <td>
-                 <img src="photos/photo_default.png" width="40" alt="User photo profile">
+                  <?php 
+                     if ($row['url_photo'] != "") { ?>
+                          <img src="<?php echo $row['url_photo']; ?>" width="60" height="60"><?php }
+                     else { ?>
+                        Sin foto
+                     <?php } ?>
                </td>
                <td><?= $row['fullname']?></td>
                <td><?= $row['email']?></td>
                <td><?= $row['mobile_phone']?></td>
                <td><?= $row['status']?></td>
-               
                <td  align="center">
-                  <a href="#">
+                  <a href="edit_user.php?id=<?php echo $row['id']; ?>">
                      <img src="icons/pencil.png" alt="Edit user" width="20">
                   </a>
                   <a href="icons/search.png">
@@ -62,11 +78,22 @@ http://localhost:80/main-store/src/list_users.php
                   <a href="delete_user.php?userID=<?= $row['id'] ?>">
                      <img src="icons/Trash.png" alt="Delete user" width="20">
                   </a>
+                  <a href="update_user.php?userID=<?= $row['id'] ?>&userStatus=<?= $row['status'] ?>">
+                     <?php
+                     if ($row['status'] == 'Active'){
+                        echo"<img src='icons/inactive.png' alt='Inactive user' width='20'>";
+                     }else{
+                        echo"<img src='icons/active.png' alt='Active user' width='20'>";
+                     }
+                     ?>
+                  </a>
                </td>
 
             </tr>
              <?php }?>
             
-       </table>    
+       </table>
+       menu: <br>
+       <a href='home.php' >Go to home</a>    
     </body>
 </html>

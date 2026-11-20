@@ -1,6 +1,7 @@
 <?php
 
 // http://localhost/main-store/src/edit_user.php 
+
 session_start();
     if (!isset($_SESSION['user_id'])){
         header('refresh:0;url=signin.html');
@@ -8,6 +9,7 @@ session_start();
         header('refresh:0;url=home.php');
     }
 
+    
 include('../settings/database.php');
 
 $id = $_GET['id'];   // el número que llegó en la URL

@@ -1,4 +1,12 @@
 <?php
+
+session_start();
+if(!isset($_SESSION['user_id'])){
+    header('refresh:0;url=signin.html');
+}else{
+   header('refresh:0;url=home.php'); 
+}
+
 // get database conecction 
 include('../settings/database.php');
 

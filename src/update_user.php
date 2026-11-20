@@ -8,6 +8,7 @@ session_start();
         header('refresh:0;url=home.php');
     }
 
+
 include('../settings/database.php');
 
 // Datos que llegan del formulario
