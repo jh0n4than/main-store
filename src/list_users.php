@@ -10,21 +10,33 @@ http://localhost:80/main-store/src/list_users.php
       exit();
    }
 
-
    include('../settings/database.php');
+
+   // 1. Capturamos el filtro de la URL
+   $status = $_GET['userStatus'] ?? '';   
+
+   // 2. Armamos la condición WHERE para PostgreSQL (TRUE / FALSE)
+   $where = "";
+   if ($status === '1') {
+       $where = "WHERE status = TRUE";
+   } elseif ($status === '0') {
+        $where = "WHERE status = FALSE";
+   }
+
 
    // Get data frm users table
    $sql = "
-      select 
-          id,
-          firstname || ' ' || lastname as fullname ,
-          mobile_phone,
-          email,
-          case when status = true  then 'Active' else 'Inactive' end as status,
-          url_photo 
-       from 
-          users
-   "; 
+    SELECT 
+        id,
+        firstname || ' ' || lastname AS fullname,
+        mobile_phone,
+        email,
+        CASE WHEN status = true THEN 'Active' ELSE 'Inactive' END AS status,
+        url_photo 
+    FROM 
+        users
+    $where
+"; 
    $res = pg_query($local_conn, $sql);
 ?>
 
@@ -37,12 +49,23 @@ http://localhost:80/main-store/src/list_users.php
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-    <body>
-       <select>
-            <option>List all users</option>
-            <option>List active users only</option>
-            <option>List inactive users only</option>
-       </select>      
+<body>
+
+
+   <form method="GET" action="list_users.php">
+        <select name="userStatus" onchange="this.form.submit()">
+            <option value="" <?= $status === '' ? 'selected' : '' ?>>
+                Todos los usuarios
+            </option>
+            <option value="1" <?= $status === '1' ? 'selected' : '' ?>>
+                Usuarios activos
+            </option>
+            <option value="0" <?= $status === '0' ? 'selected' : '' ?>>
+                Usuarios inactivos
+            </option>
+        </select>
+    </form>
+
         <table border = "2" align = "center" class="table table-striped">
 
             <tr>
@@ -75,9 +98,32 @@ http://localhost:80/main-store/src/list_users.php
                   <a href="icons/search.png">
                      <img src="icons/search.png" alt="Search user" width="20">
                   </a>
-                  <a href="delete_user.php?userID=<?= $row['id'] ?>">
+                 <?php
+                      // Si llega el parámetro confirmar por la URL, la variable será true
+                      $mostrarConfirmacion = isset($_GET['confirmar']) && $_GET['confirmar'] == '1';
+                  ?>
+
+                  <a  href="?confirmar=1&id=<?= $row['id'] ?>">
                      <img src="icons/Trash.png" alt="Delete user" width="20">
                   </a>
+                  <!-- Cuadro de confirmación (fuera del enlace <a>) -->
+                 <?php if ($mostrarConfirmacion && $_GET['id'] == $row['id']): ?>
+                     <fieldset style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; z-index: 1000; width: 220px; padding: 10px; font-size: 12px; text-align: center; font-family: sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                           <legend style="font-weight: bold;">Confirmación</legend>
+                           <p style="margin: 6px 0;">¿Quieres confirmar los cambios?</p>
+
+                           <a href="delete_user.php?userID=<?= $row['id'] ?>" style="text-decoration: none;">
+                              <button type="button" style="font-size: 11px; padding: 3px 8px;">Sí</button>
+                           </a>
+
+                           <a href="list_users.php" style="text-decoration: none;">
+                              <button type="button" style="font-size: 11px; padding: 3px 8px;">No</button>
+                           </a>
+                     </fieldset>
+               <?php endif; ?>
+                  
+
+
                   <a href="update_user.php?userID=<?= $row['id'] ?>&userStatus=<?= $row['status'] ?>">
                      <?php
                      if ($row['status'] == 'Active'){

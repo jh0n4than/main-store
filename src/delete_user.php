@@ -16,6 +16,8 @@ include('../settings/database.php');
 $user_id = $_GET['userID'];
 
 // Prepare query
+
+
 $sql_delete_user  = "DELETE FROM users WHERE id = $user_id";
 $res = pg_query($local_conn, $sql_delete_user); 
 if($res){
@@ -26,3 +28,4 @@ if($res){
     header('refresh:0;url=list_users.php');
     }
 ?>
+
