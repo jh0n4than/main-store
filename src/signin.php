@@ -1,53 +1,47 @@
 <?php
-include "../settings/database.php";
+//get database connection 
+include('../settings/database.php');
 
 session_start();
-if(!isset($_SESSION['user_id'])){
+/*if (!isset($_SESSION['user_id'])){
     header('refresh:0;url=signin.html');
-}else{
-   header('refresh:0;url=home.php'); 
-}
+}else {
+    header('refresh:0;url=home.php');
+}*/
+    $email= $_POST['email'];
+    //$passwd= MD5($_POST['passw']);
+
+    $sql_get_password = "SELECT password FROM users WHERE email = '$email'";
+    $res =pg_query ($local_conn, $sql_get_password);
+    $row= pg_fetch_assoc ($res);
+    $passwd_db =$row ['password'];
+
+    $passwd= password_verify($_POST['pswd'], $passwd_db);
 
 
-$email = $_POST['email'];
-$password = MD5($_POST['pswd']);
-
-$sql_check_email = "
+    echo "hola". $passwd;
+    $sql_check_email ="
     SELECT 
         id,
         firstname,
         lastname,
-        email 
+        email,
+        url_photo
     FROM 
-        users
-    WHERE 
-        email = '$email' and
-        password = '$password'
+        users 
+    WHERE  
+        email = '$email'
 ";
-
-// in local
 $res = pg_query($local_conn, $sql_check_email);
-$total = pg_num_rows($res);
+$total = pg_num_rows ($res);
 $row = pg_fetch_assoc($res);
 
-//verify in supabase 
-$res_sb = pg_query($supa_conn, $sql_check_email);
-$total_sb = pg_num_rows($res_sb);
-
-// in local
-if($total>0){
-    $_SESSION['user_id'] = $row['id'];
-    header('refresh:0;url=home.php');
-}else{
-     echo "<script>alert('User email does not  exist. Try again !!!')</script>";
-     header('refresh:0;url=signin.html');
+if ($total>0 && $passwd){
+    $_SESSION['user_id'] = $row ['id'];
+    $_SESSION['user_firstname'] = $row['firstname'];
+    $_SESSION['user_lastname'] = $row['lastname'];
+    header ('refresh:0;url=home.php');
+    }else {
+    echo "<script>alert('Invalid email or password. Try again!!!')</script>";
+        header ('refresh:0;url=signin.html');
 }
-
-
-// supabase
-if($total_sb > 0){
-    //header('refresh:0;url=home.php');
-}else{
-    echo "<script>alert('User email does not exist in supabase. Try again !!!')</script>";   
-}
-    

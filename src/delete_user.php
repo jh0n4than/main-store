@@ -7,7 +7,7 @@
   if(!isset($_SESSION['user_id'])){
         header('refresh:0;url=signin.html');
   }else{
-        header('refresh:0;url=home.php'); 
+       // header('refresh:0;url=home.php'); 
   }
 
 include('../settings/database.php');
@@ -28,4 +28,3 @@ if($res){
     header('refresh:0;url=list_users.php');
     }
 ?>
-

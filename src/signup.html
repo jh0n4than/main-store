@@ -1,27 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Store - Register User</title>
-            <link rel="icon" type="image/png" href="src/icons/main_store_icon.png">
+    <meta name="theme-color" content="#f8f6f2">
+    <title>Crear cuenta | Main Store</title>
+    <link rel="icon" type="image/jpeg" href="icons/main-store.jpg">
+    <link rel="stylesheet" href="auth.css">
 </head>
 <body>
-    <label>Register User Form</label><br><br>
-    <form  name="register-form" action="signup.php" method="post">
-        <label>Firstname:</label><br>
-        <input type="text" name="fname" placeholder="Pepito" required><br><br>
-        <label>Lastname:</label><br>
-        <input type="text" name="lname" placeholder="Perez" required><br><br>
-        <label>Identification Number:</label><br>
-        <input type="text" name="idnumber" placeholder="1234567890" required><br><br>
-        <label>Mobile Phone:</label><br>
-        <input type="text" name="mphone" placeholder="3133333333" required><br><br>
-        <label>E-Mail:</label><br>
-        <input type="email" name="email" placeholder="alguien@mail.com" required><br><br>
-        <label>Password:</label><br>
-        <input type="password" name="pswd" placeholder="Algun123*" required><br><br>
-        <button>Register:</button>
-    </form>
+    <header class="auth-header">
+        <a class="brand" href="../index.html" aria-label="Main Store, inicio">
+            <img src="icons/main-store.jpg" alt="">
+            <span>Main</span> Store
+        </a>
+        <a class="back-link" href="../index.html">Volver a la tienda <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main class="auth-layout">
+        <section class="welcome-panel">
+            <p class="eyebrow">Una nueva experiencia</p>
+            <h1>Tu próxima compra empieza aquí.</h1>
+            <p class="welcome-copy">
+                Crea tu cuenta en Main Store y descubre una forma sencilla
+                de encontrar lo que necesitas.
+            </p>
+            <div class="welcome-art" aria-hidden="true">
+                <div class="art-circle"></div>
+                <div class="art-bag"><span>M</span></div>
+                <span class="sparkle sparkle-one">✦</span>
+                <span class="sparkle sparkle-two">✧</span>
+                <span class="art-caption">Bienvenido a Main Store</span>
+            </div>
+            <p class="panel-footnote"><span aria-hidden="true">✓</span> Es rápido y fácil comenzar</p>
+        </section>
+
+        <section class="form-card" aria-labelledby="form-title">
+            <p class="eyebrow">Únete a nosotros</p>
+            <h2 id="form-title">Crea tu cuenta</h2>
+            <p class="form-intro">Completa tus datos para registrarte.</p>
+
+            <form name="register-form" action="signup.php" method="post">
+                <div class="field-grid">
+                    <div class="form-field">
+                        <label for="fname">Nombre</label>
+                        <input id="fname" type="text" name="fname" placeholder="Tu nombre" autocomplete="given-name" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="lname">Apellido</label>
+                        <input id="lname" type="text" name="lname" placeholder="Tu apellido" autocomplete="family-name" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="idnumber">Número de identificación</label>
+                        <input id="idnumber" type="text" name="idnumber" placeholder="Tu número de identificación" autocomplete="off" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="mphone">Teléfono móvil</label>
+                        <input id="mphone" type="text" name="mphone" placeholder="Tu número de teléfono" autocomplete="tel" required>
+                    </div>
+                    <div class="form-field field-full">
+                        <label for="email">Correo electrónico</label>
+                        <input id="email" type="email" name="email" placeholder="nombre@correo.com" autocomplete="email" required>
+                    </div>
+                    <div class="form-field field-full">
+                        <label for="pswd">Contraseña</label>
+                        <input id="pswd" type="password" name="pswd" placeholder="Crea una contraseña" autocomplete="new-password" required>
+                    </div>
+                </div>
+                <button class="submit-button" type="submit">Crear cuenta <span aria-hidden="true">→</span></button>
+            </form>
+
+            <p class="form-switch">¿Ya tienes una cuenta? <a href="signin.html">Inicia sesión</a></p>
+        </section>
+    </main>
+
+    <footer class="auth-footer">
+        <span>© 2026 Main Store</span>
+        <span>Gracias por visitarnos</span>
+    </footer>
 </body>
 </html>

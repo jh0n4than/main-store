@@ -9,6 +9,7 @@ CREATE TABLE users (
     password      VARCHAR(255)  NOT NULL,
     url_photo     TEXT,
     birth_date    DATE,
+    role          VARCHAR(20)   NOT NULL DEFAULT 'cliente' CHECK (role IN ('cliente', 'admin')),
     status        BOOLEAN       NOT NULL DEFAULT TRUE,
     created_at    TIMESTAMPTZ   NOT NULL DEFAULT NOW(),
     updated_at    TIMESTAMPTZ   NOT NULL DEFAULT NOW(),

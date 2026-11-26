@@ -1,29 +1,64 @@
 <!DOCTYPE html>
-
-<html lang="en">
-
+<html lang="es">
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Document</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f8f6f2">
+    <title>Iniciar sesión | Main Store</title>
+    <link rel="icon" type="image/jpeg" href="icons/main-store.jpg">
+    <link rel="stylesheet" href="auth.css">
 </head>
-
 <body>
+    <header class="auth-header">
+        <a class="brand" href="../index.html" aria-label="Main Store, inicio">
+            <img src="icons/main-store.jpg" alt="">
+            <span>Main</span> Store
+        </a>
+        <a class="back-link" href="../index.html">Volver a la tienda <span aria-hidden="true">→</span></a>
+    </header>
 
- <h3>Login User</h3>
+    <main class="auth-layout signin-layout">
+        <section class="welcome-panel">
+            <p class="eyebrow">Qué bueno verte</p>
+            <h1>Tu tienda favorita te espera.</h1>
+            <p class="welcome-copy">
+                Inicia sesión para continuar disfrutando de una experiencia
+                de compra sencilla y hecha para ti.
+            </p>
+            <div class="welcome-art" aria-hidden="true">
+                <div class="art-circle"></div>
+                <div class="art-bag"><span>♡</span></div>
+                <span class="sparkle sparkle-one">✦</span>
+                <span class="sparkle sparkle-two">✧</span>
+                <span class="art-caption">Nos alegra tenerte aquí</span>
+            </div>
+            <p class="panel-footnote"><span aria-hidden="true">✓</span> Accede de forma fácil y segura</p>
+        </section>
 
-    <form name="login-form" action="signin.php" method="post">   
-        <label>E-mail:</label><br>
-        <input type="email" name="email" placeholder="joe@mail.com" required><br><br>
+        <section class="form-card signin-card" aria-labelledby="form-title">
+            <p class="eyebrow">De vuelta en Main Store</p>
+            <h2 id="form-title">Inicia sesión</h2>
+            <p class="form-intro">Ingresa tus datos para acceder a tu cuenta.</p>
 
-        <label>Password:</label><br>
-        <input type="password" name="pswd" placeholder="*" required><br><br>
+            <form name="login-form" action="signin.php" method="post">
+                <div class="form-field">
+                    <label for="email">Correo electrónico</label>
+                    <input id="email" type="email" name="email" placeholder="nombre@correo.com" autocomplete="email" required>
+                </div>
+                <div class="form-field">
+                    <label for="pswd">Contraseña</label>
+                    <input id="pswd" type="password" name="pswd" placeholder="Ingresa tu contraseña" autocomplete="current-password" required>
+                </div>
+                <button class="submit-button" type="submit">Iniciar sesión <span aria-hidden="true">→</span></button>
+            </form>
 
-        <button >Login</button>
-    </form>
+            <p class="form-switch">¿Aún no tienes una cuenta? <a href="signup.html">Regístrate</a></p>
+        </section>
+    </main>
+
+    <footer class="auth-footer">
+        <span>© 2026 Main Store</span>
+        <span>Gracias por visitarnos</span>
+    </footer>
 </body>
 </html>
